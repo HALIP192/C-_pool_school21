@@ -26,7 +26,7 @@ const Contact &PhoneBook::operator[](int32_t number)
 {
     if (number < 0 || number >= PHONEBOOK_SIZE || number >= s)
         throw std::runtime_error("Invalid index");
-    return (array[(number) % PHONEBOOK_SIZE]);
+    return (array[(number)]);
 }
 
 void PhoneBook::add(const Contact &value)
@@ -77,7 +77,7 @@ static const std::string    outputMsg(const std::string &value)
 std::ostream &operator<<(std::ostream &out, PhoneBook &value)
 {
     const Contact   *ptr = value.getContact();
-    int32_t         left = value.getLeftBound();
+//    int32_t         left = value.getLeftBound();
     int32_t         size = value.getSize();
     int32_t         index;
 
@@ -89,7 +89,7 @@ std::ostream &operator<<(std::ostream &out, PhoneBook &value)
     out << "╠══════════╬══════════╬══════════╬══════════╣" << std::endl;
     for (int32_t i = 0; i < size; ++i)
     {
-        index = (left + i) % PHONEBOOK_SIZE;
+        index = i;
         out << outputPipe() << outputMsg(std::string() + static_cast<char>('0' + i))
             << outputPipe() << outputMsg(ptr[index].firstName) << outputPipe()
             << outputMsg(ptr[index].lastName) << outputPipe()
