@@ -6,7 +6,7 @@
 /*   By: ntitan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:01:21 by ntitan            #+#    #+#             */
-/*   Updated: 2022/11/13 17:36:53 by ntitan           ###   ########.fr       */
+/*   Updated: 2022/11/13 17:49:17 by ntitan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,20 @@
 
 class Harl
 {
-	private:
-		void (Harl::*funcs[BUF_SIZE])();
-		void debug(void);
-		void info(void);
-		void warning(void);
-		void error(void);
-		unsigned char hash(const std::string &str);
-		void something(void);
+private:
+    void    (Harl::*funcs[BUF_SIZE])();
+    void    debug(void);
+    void    info(void);
+    void    warning(void);
+    void    error(void);
+    unsigned char   hash(const std::string &str);
+    void    something(void);
+public:
+    
+    Harl(const std::string &str);
 
-		Harl(const Harl &obj);
-		Harl &operator=(const Harl &obj);
-	public:
+    void    complain(std::string level);
 
-		Harl(void);
-		~Harl(void);
-
-		void complain(std::string level);
 };
 
 #endif

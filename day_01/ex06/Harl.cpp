@@ -1,38 +1,42 @@
 #include "Harl.hpp"
 
-Harl::Harl(void)
+Harl::Harl(const std::string &str)
 {
-	std::cout << "Harl was Created" << std::endl;
-	for(int i = 0; i < BUF_SIZE; ++i)
-		funcs[i] = &Harl::something;
-	funcs[hash("debug")] = &Harl::debug;
-	funcs[hash("info")] = &Harl::info;
-	funcs[hash("warning")] = &Harl::warning;
-	funcs[hash("error")] = &Harl::error;
+    unsigned char           minimum = hash(str);
+
+    for (int i = 0; i < BUF_SIZE; ++i)
+        funcs[i] = &Harl::something;
+    switch (minimum)
+    {
+        case (44): funcs[44] = &Harl::debug;
+        case (220): funcs[220] = &Harl::info;
+        case (247): funcs[247] = &Harl::warning;
+        case (141): funcs[141] = &Harl::error; break;
+        default:    std::cerr << "Error: invalid argument" << std::endl; break;
+    }
 }
 
-Harl::~Harl(void)
+void    Harl::debug(void)
 {
-	std::cout << "Harl was destroied" << std::endl;
-}
-
-void Harl::debug(void)
-{
-	std::cout << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-specialketchup burger. I really do!" << std::endl;
+    std::cout << "[ DEBUG ]" << std::endl;
+    std::cout << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-specialketchup burger. I really do!" << std::endl;
 }
 
 void    Harl::info(void)
 {
+    std::cout << "[ INFO ]" << std::endl;
     std::cout << "I cannot believe adding extra bacon costs more money. You didn't put enough bacon in my burger! If you did, I wouldn't be asking for more!" << std::endl;
 }
 
 void    Harl::warning(void)
 {
+    std::cout << "[ WARNING ]" << std::endl;
     std::cout << "I think I deserve to have some extra bacon for free. I\'ve been coming for years whereas you started working here since last month." << std::endl;
 }
 
 void    Harl::error(void)
 {
+    std::cout << "[ ERROR ]" << std::endl;
     std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
