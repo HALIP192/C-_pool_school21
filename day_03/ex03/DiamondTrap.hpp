@@ -7,7 +7,7 @@
 # include <string>
 # include <iostream>
 
-class DiamondTrap: public ScavTrap, public ClapTrap
+class DiamondTrap: public ScavTrap, public FragTrap
 {
     private:
         std::string name;
