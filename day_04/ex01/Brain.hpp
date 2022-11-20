@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #ifndef BRAIN_HPP
-# define BRANIN_HPP
+# define BRAIN_HPP
 
 # include <iostream>
 # include <string>
 
-# define BRAIN_SIZE
+# define BRAIN_SIZE 100
 
 class Brain
 {
@@ -27,5 +27,6 @@ class Brain
 		~Brain(void);
 
 		Brain &operator=(const Brain &obj);
-}
+};
+
 #endif

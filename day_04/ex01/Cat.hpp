@@ -27,6 +27,9 @@ public:
 
     virtual void    makeSound(void) const;
     Cat &operator=(const Cat &obj);
+
+    void setIdea(int num, const std::string &str);
+    const std::string &getIdea(int num) const;
 };
 
 #endif //CAT_HPP

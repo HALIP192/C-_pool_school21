@@ -34,7 +34,7 @@ Animal  &Animal::operator=(const Animal &obj)
     type = obj.type;
     return *this;
 }
-                                       
+
 void    Animal::makeSound(void) const
 {
     std::cout << "Animal sound" << std::endl;

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ntitan <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 19:00:55 by ntitan            #+#    #+#             */
-/*   Updated: 2022/11/19 19:00:56 by ntitan           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <iostream> 
 #include "Animal.hpp"
 #include "Dog.hpp"
@@ -25,14 +13,14 @@ void    testOne(void)
     const Animal* meta = new Animal();
     const Animal* j = new Dog();
     const Animal* i = new Cat();
-                                                   
+
     std::cout << j->getType() << " " << std::endl;
     std::cout << i->getType() << " " << std::endl;
     i->makeSound(); //will output the cat sound!
     j->makeSound();
     meta->makeSound();
     delete meta;
-    delete j;    
+    delete j;
     delete i;
     FINISH_TEST(1);
 }
@@ -70,17 +58,19 @@ void    testThree(void)
 void    testFour(void)
 {
     START_TEST(4);
-    const Animal* j = new Dog();
-    const Animal* i = new Cat();
+    std::cout << "lol" << std::endl;
+    /* const Animal* j = new Dog(); */
+    /* const Animal* i = new Cat(); */
 
-    delete j;//should not create a leak
-    delete i;
+    /* delete j;//should not create a leak */
+    /* delete i; */
     Dog     b;
-    Ani[2;2R[3;1R[>0;95;0c]10;rgb:c7f1/c7f2/c7f2]11;rgb:0000/0000/0000mal  *a = &b;
+    Animal  *a = &b;
     std::cout << "Start test 4" << std::endl;
     std::cout << a->getType() << std::endl;
     b.setIdea(0, "I'm dog?");
     Dog     c = b;
+    std::cout << "[dfsdf]" << std::endl;
     std::cout << c.getIdea(0) << std::endl;
     Cat     d;
     Animal  *a2 = &d;

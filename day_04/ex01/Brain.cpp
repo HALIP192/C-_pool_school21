@@ -15,10 +15,11 @@ Brain::~Brain(void)
 	std::cout << "Brain was destroyed" << std::endl;
 }
 
-Brain &Brain::operator=(const Brain &obj);
+Brain &Brain::operator=(const Brain &obj)
 {
 	for (int i = 0; i < BRAIN_SIZE; ++i)
 	{
+        std::cout << "abrakadabra\n";
 		ideas[i] = obj.ideas[i];
 	}
 	return *this;
