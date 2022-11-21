@@ -39,6 +39,13 @@ void Dog::makeSound() const {
 	std::cout << "Bark!" << std::endl;
 }
 
-Brain *Dog::getBrain() {
+Brain *Dog::getBrain() const {
 	return brain;
+}
+
+Animal &Dog::operator=(Animal const &a) {
+    std::cout << "Animal Assign" << std::endl;
+    this->type = a.getType();
+    *(this->brain) = *(a.getBrain());
+    return *this;
 }

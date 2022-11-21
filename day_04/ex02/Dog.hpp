@@ -21,10 +21,11 @@ public:
 	Dog();
 	Dog &operator=(const Dog &a);
 	Dog(const Dog &copy);
-	~Dog();
+	virtual ~Dog();
 
-	void	makeSound() const;
-	virtual	Brain *getBrain();
+	virtual void	makeSound() const;
+	virtual	Brain *getBrain() const;
+    virtual Animal &operator=(Animal const &a);
 };
 
 

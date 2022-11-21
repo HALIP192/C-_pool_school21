@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Cat.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntitan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,35 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "Cat.hpp"
 
-Dog::Dog() {
-	this->type = "Dog";
-	this->brain = new Brain();
+Cat::Cat() {
+	this->type = "Cat";
+	brain = new Brain();
 	std::cout << this->type << " is create!" << std::endl;
 }
 
-Dog &Dog::operator=(const Dog &a) {
+Cat &Cat::operator=(const Cat &a) {
 	this->type = a.type;
 	this->brain = new Brain(*a.brain);
 	return *this;
 }
 
-Dog::Dog(const Dog &copy) : Animal() {
+Cat::Cat(const Cat &copy) : Animal() {
 	this->type = copy.type;
 	this->brain = new Brain(*copy.brain);
 	std::cout << "Copy Constructor " << this->type << std::endl;
 }
 
-Dog::~Dog() {
+Cat::~Cat() {
 	std::cout << this->type << " is destroy!" << std::endl;
 	delete brain;
 }
 
-void Dog::makeSound() const {
-	std::cout << "Bark!" << std::endl;
+void Cat::makeSound() const {
+	std::cout << "Meoow.." << std::endl;
 }
 
-Brain *Dog::getBrain() {
+Brain *Cat::getBrain() const {
 	return brain;
+}
+
+Animal &Cat::operator=(const Animal &a) {
+    std::cout << "Animal Assign" << std::endl;
+    this->type = a.getType();
+    *(this->brain) = *(a.getBrain());
+    return *this;
 }

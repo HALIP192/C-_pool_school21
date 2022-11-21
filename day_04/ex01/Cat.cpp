@@ -12,47 +12,33 @@
 
 #include "Cat.hpp"
 
-Cat::Cat(void)
-{
-    type = "Cat";
-    brain = new Brain();
-    std::cout << "Cat was created" << std::endl;
+Cat::Cat() {
+	this->type = "Cat";
+	brain = new Brain();
+	std::cout << this->type << " is create!" << std::endl;
 }
 
-Cat::Cat(const Cat &obj)
-{
-    *this = obj;
-    brain = NULL;
+Cat &Cat::operator=(const Cat &a) {
+	this->type = a.type;
+	this->brain = new Brain(*a.brain);
+	return *this;
 }
 
-Cat::~Cat(void)
-{
-    std::cout << "Cat was destroyed" << std::endl;
+Cat::Cat(const Cat &copy) : Animal() {
+	this->type = copy.type;
+	this->brain = new Brain(*copy.brain);
+	std::cout << "Copy Constructor " << this->type << std::endl;
 }
 
-Cat &Cat::operator=(const Cat &obj)
-{
-    Animal::operator=(obj);
-    if (brain == NULL)
-        brain = new Brain();
-    brain = (obj.brain);
-    return *this;
+Cat::~Cat() {
+	std::cout << this->type << " is destroy!" << std::endl;
+	delete brain;
 }
 
-void Cat::setIdea(int num, const std::string &str)
-{
-    if (num < 0 || num >= BRAIN_SIZE)
-        return ;
-    brain->ideas[num] = str;
+void Cat::makeSound() const {
+	std::cout << "Meoow.." << std::endl;
 }
 
-const std::string  &Cat::getIdea(int num) const
-{
-//std::cout << "LOL\n";
-    return brain->ideas[num % BRAIN_SIZE];
-}
-
-void    Cat::makeSound(void) const
-{
-    std::cout << "Cat sound" << std::endl;
+Brain *Cat::getBrain() {
+	return brain;
 }

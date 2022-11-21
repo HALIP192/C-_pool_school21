@@ -9,27 +9,24 @@
 /*   Updated: 2022/11/19 19:02:22 by ntitan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef CAT_HPP
-# define CAT_HPP
+#ifndef CPP_CAT_H
+#define CPP_CAT_H
 
-# include "Animal.hpp"
-# include "Brain.hpp"
-# include <iostream>
+#include "Animal.hpp"
 
-class   Cat : public Animal
-{
+class Cat: public Animal {
 private:
-	Brain *brain;
+	Brain	*brain;
 public:
-    Cat(void);
-    Cat(const Cat &obj);
-    ~Cat(void);
+	Cat();
+	Cat(const Cat &copy);
+	Cat	&operator=(const Cat &a);
+	~Cat();
 
-    virtual void    makeSound(void) const;
-    Cat &operator=(const Cat &obj);
-
-    void setIdea(int num, const std::string &str);
-    const std::string &getIdea(int num) const;
+	void	makeSound() const;
+	virtual	Brain *getBrain();
 };
 
-#endif //CAT_HPP
+
+#endif //CPP_CAT_H
+

@@ -1,44 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Animal.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntitan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 18:40:44 by ntitan            #+#    #+#             */
-/*   Updated: 2022/11/19 19:03:40 by ntitan           ###   ########.fr       */
+/*   Created: 2022/11/19 18:38:45 by ntitan            #+#    #+#             */
+/*   Updated: 2022/11/19 18:38:47 by ntitan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "Animal.hpp"
 
-Dog::Dog() {
-	this->type = "Dog";
-	this->brain = new Brain();
+Animal::Animal():type("Animal"){
 	std::cout << this->type << " is create!" << std::endl;
 }
 
-Dog &Dog::operator=(const Dog &a) {
+Animal::~Animal() {
+	std::cout << "Animal is destroy!" << std::endl;
+}
+
+Animal &Animal::operator=(const Animal &a) {
 	this->type = a.type;
-	this->brain = new Brain(*a.brain);
 	return *this;
 }
 
-Dog::Dog(const Dog &copy) : Animal() {
-	this->type = copy.type;
-	this->brain = new Brain(*copy.brain);
+Animal::Animal(const Animal &copy) {
+	*this = copy;
 	std::cout << "Copy Constructor " << this->type << std::endl;
 }
 
-Dog::~Dog() {
-	std::cout << this->type << " is destroy!" << std::endl;
-	delete brain;
-}
-
-void Dog::makeSound() const {
-	std::cout << "Bark!" << std::endl;
-}
-
-Brain *Dog::getBrain() {
-	return brain;
+const std::string &Animal::getType() const {
+	return this->type;
 }

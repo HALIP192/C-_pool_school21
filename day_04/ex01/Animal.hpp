@@ -10,26 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL_HPP
-# define ANIMAL_HPP
+#ifndef CPP_ANIMAL_H
+#define CPP_ANIMAL_H
 
-# include <iostream>
-# include <string>
+#include <string>
+#include <iostream>
+#include "Brain.hpp"
 
-class   Animal
-{
+class Animal {
 protected:
-    std::string type;
-
+	std::string	type;
 public:
-    Animal(void);
-    Animal(const Animal &obj);
-    virtual ~Animal(void);
-    
-    Animal  &operator=(const Animal &obj);
+	Animal();
+	Animal(const Animal &copy);
+	Animal &operator=(const Animal &a);
+	virtual ~Animal();
 
-    virtual void    makeSound(void) const;
-    const std::string &getType(void) const;
+	const std::string	&getType() const;
+	virtual void	makeSound() const;
+	virtual	Brain	*getBrain() = 0;
 };
 
-#endif //ANIMAL_HPP
+
+#endif //CPP_ANIMAL_H
