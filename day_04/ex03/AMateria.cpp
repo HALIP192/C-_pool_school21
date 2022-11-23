@@ -17,6 +17,6 @@ void AMateria::use(ICharacter &target) {
 AMateria &AMateria::operator=(const AMateria &obj)
 {
     std::cout << "AMateria assign operator called" << std::endl;
-    _type = obj._type;
+    _type = obj.getType();
     return *this;
 }

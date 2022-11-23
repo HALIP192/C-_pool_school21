@@ -1,6 +1,6 @@
 #include "Ice.hpp"
 
-Ice::Ice() : AMateria("Ice") {
+Ice::Ice() : AMateria("ice") {
     std::cout << "Ice AMateria was created" << std::endl;
 }
 
@@ -13,7 +13,7 @@ Ice::~Ice() {
 }
 
 Ice &Ice::operator=(const Ice &obj) {
-    this->_type = obj.getType();
+    _type = obj.getType();
     return *this;
 }
 
