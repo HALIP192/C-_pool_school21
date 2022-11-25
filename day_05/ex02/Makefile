@@ -3,14 +3,20 @@ CFLAGS	=	-Wall -Wextra -Werror -pedantic-errors -Wctor-dtor-privacy -Wnon-virtua
 
 SRC		=	main		\
 			Bureaucrat	\
-			Form
+			AForm		\
+			ShrubberyCreationForm \
+			RobotomyRequestForm   \
+			PresidentialPardonForm 
 
 OBJ_DIR	=	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/,$(SRC:=.o))
 
 HEADER_DIR	=	.
 HEADER		=	Bureaucrat.hpp	\
-				Form.hpp		\
+				AForm.hpp		\
+				ShrubberyCreationForm.hpp \
+				RobotomyRequestForm.hpp   \
+				PresidentialPardonForm.hpp 
 
 NAME		=	Bureaucrat
 
