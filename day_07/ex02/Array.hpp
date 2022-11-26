@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Whatevet.hpp                                       :+:      :+:    :+:   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntitan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 19:57:55 by ntitan            #+#    #+#             */
-/*   Updated: 2022/11/26 14:45:48 by ntitan           ###   ########.fr       */
+/*   Created: 2022/11/26 14:46:55 by ntitan            #+#    #+#             */
+/*   Updated: 2022/11/26 14:51:11 by ntitan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WHATEVER_HPP
-# define WHATEVER_HPP
+#ifndef ARRAY_HPP
+# define ARRAY_HPP
+
+# include <exception>
 
 template<class T>
-void swap(T &a, T &b)
-{
-	T	c = a;
+class Array {
+	T *arr;
+	unsigned int count;
+	public:
+	Array();
+	Array(unsigned int n);
+	Array(const Array<T> &obj);
+	~Array();
 
-	a = b;
-	b = c;
-}
+	Array<T> &operator=(const Array<T> &obj);
+	T &operator[](unsigned int idx) const;
+	unsigned int size(void) const;
+};
 
-template<class T>
-T	&min(T &a, T&b)
-{
-	return a < b ? a : b;
-}
-
-template<class T>
-T	&max(T &a, T &b)
-{
-	return a > b ? a : b;
-}
+#include "Array.tpp"
 
 #endif
