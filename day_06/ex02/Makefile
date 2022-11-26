@@ -13,7 +13,7 @@ HEADER		=	Base.hpp	\
 				B.hpp		\
 				A.hpp
 
-NAME		=	ScalarConvert
+NAME		=	Indentify
 
 .PHONY:	all clean fclean re
 

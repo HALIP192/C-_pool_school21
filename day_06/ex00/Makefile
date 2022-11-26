@@ -8,7 +8,7 @@ OBJ		=	$(addprefix $(OBJ_DIR)/,$(SRC:=.o))
 
 HEADER_DIR	=	.
 
-NAME		=	ScalarConvert
+NAME		=	convert
 
 .PHONY:	all clean fclean re
 

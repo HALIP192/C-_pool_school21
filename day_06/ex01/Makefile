@@ -9,7 +9,7 @@ OBJ		=	$(addprefix $(OBJ_DIR)/,$(SRC:=.o))
 HEADER_DIR	=	.
 HEADER		=	Data.hpp
 
-NAME		=	ScalarConvert
+NAME		=	Serialise
 
 .PHONY:	all clean fclean re
 
