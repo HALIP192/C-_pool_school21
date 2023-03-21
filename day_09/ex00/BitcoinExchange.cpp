@@ -19,49 +19,59 @@ BitcoinExchange::BitcoinExchange()
 
 BitcoinExchange::~BitcoinExchange() { }
 
+std::string BitcoinExchange::separete(std::string &str, std::string const &dem)
+{
+    int it = str.find(dem, 0);
+    if (it != std::string::npos)
+    {
+        std::string ret = str.substr(0, it);
+        str = str.substr(it + dem.size(), str.size() - it - 1);
+        return ret;
+    }
+    std::string ret = str;
+    str = "";
+    return ret;
+}
+
 void BitcoinExchange::parse_file(std::string const &filename)
 {
-		database.open(filename.c_str());
-		char separator;
-		std::vector<std::string> *date;
-		std::vector<float> *rate;
-		if (filename == "data.csv")
+	database.open(filename.c_str());
+    std::string separator;
+	std::vector<std::string> *date;
+	std::vector<float> *rate;
+	if (filename == "data.csv")
+	{
+		separator = ",";
+		date = &date_database;
+		rate = &rate_database;
+	} else {
+		separator = " | ";
+		date = &date_input;
+		rate = &rate_input;
+	}
+	std::string line, word;
+	if (database.is_open()) {
+		while (std::getline(database, line))
 		{
-			separator = ',';
-			date = &date_database;
-			rate = &rate_database;
-		} else {
-			separator = '|';
-			date = &date_input;
-			rate = &rate_input;
-		}
-		std::string line, word;
-		if (database.is_open()) {
-			while (std::getline(database, line))
+			bool cnt = false;
+			while ((word = separete(line, separator)) != "")
 			{
-				std::stringstream str(line);
-
-				bool cnt = false;
-				while (std::getline(str, word, separator))
-				{
-					if (word == "exchange_rate" || word == "data")
-						continue;
-					if (cnt == false) {
-						date->push_back(word);
-						cnt = true;
-					}
-					if (cnt == true) {
-						rate->push_back(atof(word.c_str()));
-						cnt = false;
-					}
+                if (word == "exchange_rate" || word == "date"
+                    || word == "value")
+                    continue;
+				if (cnt == false) {
+					date->push_back(word);
+					cnt = true;
+				} else {
+					rate->push_back(atof(word.c_str()));
+					cnt = false;
 				}
 			}
-		} else {
-			std::cout << "Error: cann't find file " << filename << std::endl;
 		}
-		database.close();
-		std::cout << date_database.size() << std::endl;
-		std::cout << rate_database.size() << std::endl;
+	} else {
+		std::cout << "Error: cann't find file " << filename << std::endl;
+	}
+	database.close();
 }
 
 int BitcoinExchange::getDay(std::string const &date)
@@ -78,18 +88,18 @@ int BitcoinExchange::getDay(std::string const &date)
 int BitcoinExchange::getMonth(std::string const &date)
 {
 	std::stringstream str(date);
-	std::string moth;
-	std::getline(str, moth, '-');
-	std::getline(str, moth, '-');
-	return atoi(moth.c_str());
+	std::string month;
+	std::getline(str, month, '-');
+	std::getline(str, month, '-');
+	return atoi(month.c_str());
 
 }
 
 int BitcoinExchange::getYear(std::string const &date)
 {
-	std::stringstream str(date);
+    std::stringstream str(date);
 	std::string year;
-	std::getline(str, year, '-');
+    std::getline(str, year, '-');
 	return atoi(year.c_str());
 }
 
@@ -122,22 +132,21 @@ int BitcoinExchange::findByDate(std::string const &date)
 
 int BitcoinExchange::findClosestByDate(std::string const &date)
 {
-	std::vector<std::string>::iterator it = date_database.begin();
-	std::vector<std::string>::iterator end = date_database.end();
-	std::vector<std::string>::iterator fnd = std::find(date_database.begin(), date_database.end(), date);
-
-	if (fnd != date_database.end())
-		return std::distance(date_database.begin(), fnd);
-	while(it != date_database.end() && getYear(*it) <= getYear(date))
-		it++;
-	while(it != date_database.end() && getYear(*it) > getYear(date))
-		it--;
-	while(it != date_database.end() && getYear(*it) == getYear(date) && getMonth(*it) >= getMonth(date))
-		it--;
-	while(it != date_database.end() && getYear(*it) == getYear(date) && getMonth(*it) == getMonth(date) && getDay(*it) <= getDay(date))
-		it--;
-	return std::distance(date_database.begin(), it);
-
+    std::vector<std::string>::iterator top = date_database.end();
+    std::vector<std::string>::iterator low = date_database.begin();
+    std::vector<std::string>::iterator it = low;
+    for (it; it != top && getYear(*it) < getYear(date); it++);
+    top = it;
+    for (it = low; it != top && getYear(*it) != getYear(top - 1); it++);
+    low = it;
+    for (it = low; it != top && getMonth(*it) < getMonth(date); it++);
+    top = it;
+    for (it = low; it != top && getMonth(*it) != getMonth(top - 1); it++);
+    low = it;
+    for (it = low; it != top && getDay(*it) < getDay(date); it++);
+    top = it;
+    for (it = low; it != top && getDay(*it) != getDay(top - 1); it++);
+    return std::distance(date_database.begin(), it);
 }
 
 void BitcoinExchange::proc()
@@ -151,10 +160,13 @@ void BitcoinExchange::proc()
 	{
 		if (is_valid_date(*it_date_input))
 		{
-			if (is_valid_rate(*it_rate_input))
+			if (is_valid_rate(*it_rate_input) > 0)
 			{
 				int fnd = findByDate(*it_date_input);
-				std::cout << date_database[fnd] << " => " << *it_rate_input << " = " << rate_input[fnd] * *it_rate_input << std::endl;
+                /* std::cout << "fnd : " << fnd << std::endl; */
+                /* std::cout << "date_database : " << date_database[fnd]  << "\t rate_database: " << rate_database[fnd] */
+                          /* << "\t date_input : " << *it_date_input << "\t rate_input: " << *it_rate_input << std::endl; */
+				std::cout << date_database[fnd] << " => " << *it_rate_input << " = " << rate_database[fnd] * *it_rate_input << std::endl;
 			} else {
 				if (is_valid_rate(*it_rate_input) == -1)
 					std::cout << "Error: not a positive number.\n";
@@ -167,7 +179,6 @@ void BitcoinExchange::proc()
 		it_date_input++;
 		it_rate_input++;
 	}
-
 }
 
 

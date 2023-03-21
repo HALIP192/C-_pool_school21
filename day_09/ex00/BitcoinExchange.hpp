@@ -31,6 +31,7 @@ class BitcoinExchange
 
 	public:
 		void parse_file(std::string const &filename);
+        std::string separete(std::string &str, std::string const &dem);
 		bool is_valid_date(std::string const &date);
 		int is_valid_rate(float rate);
 		int getYear(std::string const &date);
