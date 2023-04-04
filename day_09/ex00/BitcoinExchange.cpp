@@ -26,10 +26,12 @@ std::string BitcoinExchange::separete(std::string &str, std::string const &dem)
     {
         std::string ret = str.substr(0, it);
         str = str.substr(it + dem.size(), str.size() - it - 1);
+        /* std::cout << ret << std::endl; */
         return ret;
     }
     std::string ret = str;
     str = "";
+    /* std::cout << ret << std::endl; */
     return ret;
 }
 
@@ -67,6 +69,9 @@ void BitcoinExchange::parse_file(std::string const &filename)
 					cnt = false;
 				}
 			}
+            if (cnt == true && word == "") {
+                rate->push_back(atof(word.c_str()));
+            }
 		}
 	} else {
 		std::cout << "Error: cann't find file " << filename << std::endl;
@@ -114,6 +119,8 @@ int BitcoinExchange::is_valid_rate(float rate)
 
 bool BitcoinExchange::is_valid_date(std::string const &date)
 {
+    if (date == " " || date == "")
+        return false;
 	int month = getMonth(date);
 	int day = getDay(date);
 	if (month > 0 && month < 13)
@@ -132,20 +139,8 @@ int BitcoinExchange::findByDate(std::string const &date)
 
 int BitcoinExchange::findClosestByDate(std::string const &date)
 {
-    std::vector<std::string>::iterator top = date_database.end();
-    std::vector<std::string>::iterator low = date_database.begin();
-    std::vector<std::string>::iterator it = low;
-    for (it; it != top && getYear(*it) < getYear(date); it++);
-    top = it;
-    for (it = low; it != top && getYear(*it) != getYear(top - 1); it++);
-    low = it;
-    for (it = low; it != top && getMonth(*it) < getMonth(date); it++);
-    top = it;
-    for (it = low; it != top && getMonth(*it) != getMonth(top - 1); it++);
-    low = it;
-    for (it = low; it != top && getDay(*it) < getDay(date); it++);
-    top = it;
-    for (it = low; it != top && getDay(*it) != getDay(top - 1); it++);
+    std::vector<std::string>::iterator it = std::lower_bound(date_database.begin(), date_database.end(), date);
+    it--;
     return std::distance(date_database.begin(), it);
 }
 
@@ -158,6 +153,7 @@ void BitcoinExchange::proc()
 
 	while (it_date_input != end_date_input && it_rate_input != end_rate_input)
 	{
+        /* std::cout << "inp: " << *it_date_input << " " << *it_rate_input << std::endl; */
 		if (is_valid_date(*it_date_input))
 		{
 			if (is_valid_rate(*it_rate_input) > 0)
@@ -166,7 +162,7 @@ void BitcoinExchange::proc()
                 /* std::cout << "fnd : " << fnd << std::endl; */
                 /* std::cout << "date_database : " << date_database[fnd]  << "\t rate_database: " << rate_database[fnd] */
                           /* << "\t date_input : " << *it_date_input << "\t rate_input: " << *it_rate_input << std::endl; */
-				std::cout << date_database[fnd] << " => " << *it_rate_input << " = " << rate_database[fnd] * *it_rate_input << std::endl;
+				std::cout << *it_date_input << " => " << *it_rate_input << " = " << rate_database[fnd] * *it_rate_input << std::endl;
 			} else {
 				if (is_valid_rate(*it_rate_input) == -1)
 					std::cout << "Error: not a positive number.\n";
