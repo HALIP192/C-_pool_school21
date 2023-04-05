@@ -21,7 +21,7 @@ BitcoinExchange::~BitcoinExchange() { }
 
 std::string BitcoinExchange::separete(std::string &str, std::string const &dem)
 {
-    int it = str.find(dem, 0);
+    const size_t it = str.find(dem, 0);
     if (it != std::string::npos)
     {
         std::string ret = str.substr(0, it);
@@ -119,8 +119,8 @@ int BitcoinExchange::is_valid_rate(float rate)
 
 bool BitcoinExchange::is_valid_date(std::string const &date)
 {
-    if (date == " " || date == "")
-        return false;
+	if (date == " " || date == "")
+		return false;
 	int month = getMonth(date);
 	int day = getDay(date);
 	if (month > 0 && month < 13)
